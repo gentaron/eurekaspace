@@ -158,7 +158,7 @@ export default function HeroSection() {
           >
             {[
               { value: '25', label: 'Tracks' },
-              { value: '1', label: 'Video' },
+              { value: '5', label: 'Videos' },
               { value: '∞', label: 'Vibes' },
             ].map((stat) => (
               <div key={stat.label} className="text-center">

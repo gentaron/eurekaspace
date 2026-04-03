@@ -218,6 +218,15 @@
   animation: pulse-glow 3s ease-in-out infinite;
 }
 
+/* Hide scrollbar for video carousel */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Glassmorphism */
 .glass {
   background: oklch(0.12 0.02 280 / 0.6);

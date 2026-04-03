@@ -44,7 +44,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-1.5">
               <Video className="w-3.5 h-3.5 text-[oklch(0.75_0.18_180)]" />
-              <span>1 Video</span>
+              <span>5 Videos</span>
             </div>
           </div>
 

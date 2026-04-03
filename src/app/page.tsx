@@ -6,7 +6,7 @@ import VideoSection from '@/components/VideoSection';
 import LinksSection from '@/components/LinksSection';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
-import { Music, Headphones, Sparkles, Zap, Radio, Link2, Film } from 'lucide-react';
+import { Music, Headphones, Sparkles, Zap, Radio, Link2, Film, Flame } from 'lucide-react';
 
 function FloatingNavbar() {
   return (
@@ -21,9 +21,9 @@ function FloatingNavbar() {
         <span className="hidden sm:inline">Tracks</span>
       </a>
       <div className="w-px h-4 bg-[oklch(0.25_0.03_280)]" />
-      <a href="#video" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.75_0.18_180)] transition-colors flex items-center gap-1.5">
-        <Film className="w-3.5 h-3.5" />
-        <span className="hidden sm:inline">Video</span>
+      <a href="#video" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.70_0.25_350)] transition-colors flex items-center gap-1.5">
+        <Flame className="w-3.5 h-3.5" />
+        <span className="hidden sm:inline">Sexy Block</span>
       </a>
       <div className="w-px h-4 bg-[oklch(0.25_0.03_280)]" />
       <a href="#links" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.80_0.15_320)] transition-colors flex items-center gap-1.5">
@@ -87,7 +87,7 @@ export default function Home() {
       <HeroSection />
       <MarqueeBanner />
       <AudioPlayer />
-      <SectionDivider label="Visual" icon={Film} />
+      <SectionDivider label="セクシー・ブロック" icon={Flame} />
       <VideoSection />
       <LinksSection />
       <Footer />

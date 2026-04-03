@@ -7,7 +7,7 @@ const links = [
   {
     title: 'Eureka Blog',
     description: 'Personal blog by Mina Eureka — thoughts, behind-the-scenes, and creative updates.',
-    url: 'https://v0-mina-auto-scribe-rnua5mddd-gentaros-projects-78e38d6f.vercel.app/',
+    url: 'https://v0-mina-auto-scribe-8h1zbsx88-gentaros-projects-78e38d6f.vercel.app/',
     icon: BookOpen,
     gradient: 'from-[oklch(0.72_0.22_300)] to-[oklch(0.80_0.15_320)]',
     glowColor: 'oklch(0.72 0.22 300)',
