@@ -6,7 +6,7 @@ import VideoSection from '@/components/VideoSection';
 import LinksSection from '@/components/LinksSection';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
-import { Music, Headphones, Sparkles, Zap, Radio, Link2 } from 'lucide-react';
+import { Music, Headphones, Sparkles, Zap, Radio, Link2, Film } from 'lucide-react';
 
 function FloatingNavbar() {
   return (
@@ -22,7 +22,7 @@ function FloatingNavbar() {
       </a>
       <div className="w-px h-4 bg-[oklch(0.25_0.03_280)]" />
       <a href="#video" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.75_0.18_180)] transition-colors flex items-center gap-1.5">
-        <Headphones className="w-3.5 h-3.5" />
+        <Film className="w-3.5 h-3.5" />
         <span className="hidden sm:inline">Video</span>
       </a>
       <div className="w-px h-4 bg-[oklch(0.25_0.03_280)]" />
@@ -64,6 +64,22 @@ function MarqueeBanner() {
   );
 }
 
+function SectionDivider({ label, icon: Icon }: { label: string; icon: React.ComponentType<{ className?: string }> }) {
+  return (
+    <div className="relative py-10">
+      <div className="absolute inset-0 flex items-center px-6">
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-[oklch(0.25_0.03_280)] to-transparent" />
+      </div>
+      <div className="relative flex justify-center">
+        <span className="glass rounded-full px-5 py-2 text-xs font-mono tracking-[0.2em] uppercase text-[oklch(0.50_0.02_280)] flex items-center gap-2">
+          <Icon className="w-3.5 h-3.5 text-[oklch(0.72_0.22_300)]" />
+          {label}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <div className="min-h-screen noise-bg relative">
@@ -71,7 +87,7 @@ export default function Home() {
       <HeroSection />
       <MarqueeBanner />
       <AudioPlayer />
-      <MarqueeBanner />
+      <SectionDivider label="Visual" icon={Film} />
       <VideoSection />
       <LinksSection />
       <Footer />

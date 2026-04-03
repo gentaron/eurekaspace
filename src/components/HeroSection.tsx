@@ -157,7 +157,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 1.1 }}
           >
             {[
-              { value: '8', label: 'Tracks' },
+              { value: '25', label: 'Tracks' },
               { value: '1', label: 'Video' },
               { value: '∞', label: 'Vibes' },
             ].map((stat) => (

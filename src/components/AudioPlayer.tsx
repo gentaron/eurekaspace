@@ -3,8 +3,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Play, Pause, SkipBack, SkipForward, Volume2, VolumeX,
-  Repeat, Shuffle, ListMusic, ChevronDown
+  Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Volume1,
+  Repeat, Shuffle, Music2, Clock, Hash
 } from 'lucide-react';
 import { useMediaStore } from '@/lib/mediaStore';
 
@@ -13,19 +13,46 @@ interface Track {
   title: string;
   artist: string;
   file: string;
-  duration?: string;
+  album?: string;
 }
 
 const tracks: Track[] = [
-  { id: 1, title: 'Big Mac Order', artist: 'feat. Mina Eureka', file: '/music/Big Mac Order - feat. Mina Eureka.mp3' },
-  { id: 2, title: "Everything's Fine", artist: 'Eureka Ver.', file: "/music/Everything's Fine - Eureka Ver.mp3" },
-  { id: 3, title: 'Overslept, wavefunction collapsed', artist: 'Mina Eureka', file: '/music/Overslept, wavefunction collapsed.mp3' },
-  { id: 4, title: '405 (OpenClaw Troubles)', artist: 'Mina Eureka', file: '/music/405 (OpenClaw Troubles).mp3' },
-  { id: 5, title: 'Still UPDATING', artist: 'Cov. Mina Eureka', file: '/music/Still UPDATING - Cov. Mina Eureka.mp3' },
-  { id: 6, title: 'Gravitational waves', artist: 'covering Mina Eureka', file: '/music/Gravitational waves - covering Mina Eureka.mp3' },
-  { id: 7, title: 'BONES', artist: 'feat. Mina Eureka', file: '/music/BONES - feat. Mina Eureka.mp3' },
-  { id: 8, title: 'Just Sen MEE', artist: 'Mina Eureka', file: '/music/Just Sen MEE.mp3' },
+  // — Original Tracks —
+  { id: 1, title: 'Big Mac Order', artist: 'feat. Mina Eureka', file: '/music/Big Mac Order - feat. Mina Eureka.mp3', album: 'Singles' },
+  { id: 2, title: "Everything's Fine", artist: 'Eureka Ver.', file: "/music/Everything's Fine - Eureka Ver.mp3", album: 'Singles' },
+  { id: 3, title: 'Overslept, wavefunction collapsed', artist: 'Mina Eureka', file: '/music/Overslept, wavefunction collapsed.mp3', album: 'Quantum Sessions' },
+  { id: 4, title: '405 (OpenClaw Troubles)', artist: 'Mina Eureka', file: '/music/405 (OpenClaw Troubles).mp3', album: 'Singles' },
+  { id: 5, title: 'Still UPDATING', artist: 'Cov. Mina Eureka', file: '/music/Still UPDATING - Cov. Mina Eureka.mp3', album: 'Covers' },
+  { id: 6, title: 'Gravitational waves', artist: 'covering Mina Eureka', file: '/music/Gravitational waves - covering Mina Eureka.mp3', album: 'Covers' },
+  { id: 7, title: 'BONES', artist: 'feat. Mina Eureka', file: '/music/BONES - feat. Mina Eureka.mp3', album: 'Singles' },
+  { id: 8, title: 'Just Sen MEE', artist: 'Mina Eureka', file: '/music/Just Sen MEE.mp3', album: 'Singles' },
+  // — New Tracks —
+  { id: 9, title: 'Starlight', artist: 'Mina Eureka', file: '/music/Starlight.mp3', album: 'Gigapolis Heart' },
+  { id: 10, title: 'ミナ・エウレカ・エルンスト', artist: 'Mina Eureka', file: '/music/ミナ・エウレカ・エルンスト.mp3', album: 'Gigapolis Heart' },
+  { id: 11, title: 'In the Light You Left Behind', artist: 'Mina Eureka', file: '/music/In the Light You Left Behind.mp3', album: 'Paradox Glow' },
+  { id: 12, title: 'Wonderful String Theory', artist: 'Mina Eureka', file: '/music/Wonderful String Theory.mp3', album: 'Quantum Sessions' },
+  { id: 13, title: 'Heterotic Dimensional Incident', artist: 'Mina Eureka', file: '/music/Heterotic Dimensional Incident.mp3', album: 'Quantum Sessions' },
+  { id: 14, title: 'Darkest Graph', artist: 'Mina Eureka', file: '/music/Darkest Graph.mp3', album: 'Paradox Glow' },
+  { id: 15, title: 'BITCOIN STANDARD', artist: 'Mina Eureka', file: '/music/BITCOIN STANDARD.mp3', album: 'XEMS' },
+  { id: 16, title: 'Gigapolis Heart', artist: 'Mina Eureka', file: '/music/Gigapolis Heart.mp3', album: 'Gigapolis Heart' },
+  { id: 17, title: 'Perth Sunrise', artist: 'Mina Eureka', file: '/music/Perth Sunrise.mp3', album: 'Gigapolis Heart' },
+  { id: 18, title: 'Paradox Glow', artist: 'Mina Eureka', file: '/music/Paradox Glow.mp3', album: 'Paradox Glow' },
+  { id: 19, title: 'Wired Horizon', artist: 'Mina Eureka', file: '/music/Wired Horizon.mp3', album: 'XEMS' },
+  { id: 20, title: 'XEMS', artist: 'Mina Eureka', file: '/music/XEMS.mp3', album: 'XEMS' },
+  { id: 21, title: 'Trenchcourt', artist: 'Mina Eureka', file: '/music/Trenchcourt.mp3', album: 'XEMS' },
+  { id: 22, title: 'Paradox Glow (Remastered)', artist: 'Mina Eureka', file: '/music/Paradox Glow (Remastered).mp3', album: 'Paradox Glow' },
+  { id: 23, title: 'Equator of Memory', artist: 'Mina Eureka', file: '/music/Equator of Memory.mp3', album: 'Gigapolis Heart' },
+  { id: 24, title: 'Encrypted Heart', artist: 'Mina Eureka', file: '/music/Encrypted Heart.mp3', album: 'Paradox Glow' },
+  { id: 25, title: 'Ephemeral War of Hearts', artist: 'Mina Eureka', file: '/music/Ephemeral War of Hearts.mp3', album: 'Paradox Glow' },
 ];
+
+// Generate a deterministic gradient for each track based on its id
+function getTrackGradient(id: number): string {
+  const hues = [300, 180, 250, 320, 270, 200, 340, 220, 160, 290];
+  const h1 = hues[id % hues.length];
+  const h2 = hues[(id + 3) % hues.length];
+  return `linear-gradient(135deg, oklch(0.55 0.20 ${h1}), oklch(0.45 0.18 ${h2}))`;
+}
 
 function formatTime(seconds: number): string {
   if (isNaN(seconds)) return '0:00';
@@ -44,9 +71,9 @@ export default function AudioPlayer() {
   const [isMuted, setIsMuted] = useState(false);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState(false);
-  const [showTrackList, setShowTrackList] = useState(false);
-  const [visualizerData, setVisualizerData] = useState<number[]>(Array(32).fill(0));
   const [hoveredTrack, setHoveredTrack] = useState<number | null>(null);
+  const [trackDurations, setTrackDurations] = useState<Record<number, number>>({});
+  const [seekHover, setSeekHover] = useState(false);
 
   const { activeSource, setActiveSource } = useMediaStore();
 
@@ -55,9 +82,7 @@ export default function AudioPlayer() {
     setActiveSource('audio');
     setTimeout(() => {
       if (audioRef.current) {
-        audioRef.current.play().catch(() => {
-          /* play() rejected — onPlay won't fire, isPlaying stays false */
-        });
+        audioRef.current.play().catch(() => {});
       }
     }, 100);
   }, [setActiveSource]);
@@ -69,14 +94,12 @@ export default function AudioPlayer() {
         setActiveSource(null);
       } else {
         setActiveSource('audio');
-        audioRef.current.play().catch(() => {
-          /* play() rejected */
-        });
+        audioRef.current.play().catch(() => {});
       }
     }
   };
 
-  const nextTrack = () => {
+  const nextTrack = useCallback(() => {
     let nextIndex: number;
     if (shuffle) {
       do {
@@ -86,7 +109,7 @@ export default function AudioPlayer() {
       nextIndex = (tracks.indexOf(currentTrack) + 1) % tracks.length;
     }
     playTrack(tracks[nextIndex]);
-  };
+  }, [shuffle, currentTrack, playTrack]);
 
   const prevTrack = () => {
     if (currentTime > 3) {
@@ -115,6 +138,7 @@ export default function AudioPlayer() {
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
       setDuration(audioRef.current.duration);
+      setTrackDurations(prev => ({ ...prev, [currentTrack.id]: audioRef.current!.duration }));
     }
   };
 
@@ -122,24 +146,23 @@ export default function AudioPlayer() {
     if (repeat) {
       if (audioRef.current) {
         audioRef.current.currentTime = 0;
-        audioRef.current.play().catch(() => {
-          /* play() rejected */
-        });
+        audioRef.current.play().catch(() => {});
       }
     } else {
       nextTrack();
     }
   };
 
-  // Auto-pause audio when video takes over
   useEffect(() => {
     if (activeSource === 'video' && audioRef.current && !audioRef.current.paused) {
       audioRef.current.pause();
     }
   }, [activeSource]);
 
-  const seek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const time = parseFloat(e.target.value);
+  const seek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const time = percent * duration;
     if (audioRef.current) {
       audioRef.current.currentTime = time;
       setCurrentTime(time);
@@ -163,7 +186,6 @@ export default function AudioPlayer() {
     }
   };
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (audioRef.current) {
@@ -173,283 +195,273 @@ export default function AudioPlayer() {
     };
   }, [setActiveSource]);
 
-  // Simulated visualizer
-  useEffect(() => {
-    let animationId: number;
-    const generateVisualizerData = () => {
-      setVisualizerData((prev) => {
-        if (!isPlaying) {
-          return prev.map((v) => Math.max(0, v * 0.92));
-        }
-        return prev.map((_, i) => {
-          const base = Math.sin(Date.now() / (200 + i * 15)) * 0.3 + 0.5;
-          const noise = Math.random() * 0.5;
-          return Math.min(1, Math.max(0, base + noise));
-        });
-      });
-      animationId = requestAnimationFrame(generateVisualizerData);
-    };
-    generateVisualizerData();
-    return () => cancelAnimationFrame(animationId);
-  }, [isPlaying]);
-
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
+  const VolumeIcon = isMuted || volume === 0 ? VolumeX : volume < 0.5 ? Volume1 : Volume2;
+
   return (
-    <section className="relative py-20 px-6" id="tracks">
+    <section className="relative py-20 px-4 sm:px-6" id="tracks">
       {/* Background accent */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-10 blur-[120px]"
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-8 blur-[120px]"
           style={{ background: 'linear-gradient(180deg, oklch(0.72 0.22 300), transparent)' }}
         />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto">
+      <div className="relative z-10 max-w-5xl mx-auto">
         {/* Section header */}
         <motion.div
-          className="text-center mb-12"
+          className="mb-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-sm font-mono tracking-[0.3em] uppercase text-[oklch(0.72_0.22_300)]">
+          <span className="text-xs font-mono tracking-[0.3em] uppercase text-[oklch(0.72_0.22_300)]">
             Discography
           </span>
-          <h2 className="text-4xl sm:text-5xl font-bold mt-3 bg-gradient-to-r from-foreground via-[oklch(0.80_0.15_320)] to-[oklch(0.75_0.18_180)] bg-clip-text text-transparent">
+          <h2 className="text-4xl sm:text-5xl font-bold mt-2 bg-gradient-to-r from-foreground via-[oklch(0.80_0.15_320)] to-[oklch(0.75_0.18_180)] bg-clip-text text-transparent">
             Tracks
           </h2>
+          <p className="text-sm text-[oklch(0.55_0.02_280)] mt-2">{tracks.length} songs</p>
         </motion.div>
 
-        {/* Visualizer */}
-        <motion.div
-          className="flex items-end justify-center gap-[2px] h-16 mb-8"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
-          {visualizerData.map((value, i) => (
-            <motion.div
-              key={i}
-              className="w-[3px] sm:w-[4px] rounded-full"
-              style={{
-                height: `${Math.max(4, value * 64)}px`,
-                background: `linear-gradient(to top, oklch(0.72 0.22 300), oklch(0.75 0.18 180))`,
-                opacity: 0.4 + value * 0.6,
-              }}
-              transition={{ duration: 0.1 }}
-            />
-          ))}
-        </motion.div>
+        <audio
+          ref={audioRef}
+          src={currentTrack.file}
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleLoadedMetadata}
+          onEnded={handleEnded}
+          onPause={() => setIsPlaying(false)}
+          onPlay={() => setIsPlaying(true)}
+          preload="metadata"
+        />
 
-        {/* Main player card */}
+        {/* Spotify-style track table */}
         <motion.div
-          className="glass rounded-2xl p-6 sm:p-8 glow-purple"
+          className="glass rounded-xl overflow-hidden"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <audio
-            ref={audioRef}
-            src={currentTrack.file}
-            onTimeUpdate={handleTimeUpdate}
-            onLoadedMetadata={handleLoadedMetadata}
-            onEnded={handleEnded}
-            onPause={() => setIsPlaying(false)}
-            onPlay={() => setIsPlaying(true)}
-            preload="metadata"
-          />
-
-          {/* Now playing info */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-4 min-w-0">
-              <motion.div
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden flex-shrink-0 border border-[oklch(0.30_0.04_300/0.3)]"
-                animate={{ rotate: isPlaying ? 360 : 0 }}
-                transition={{ duration: 8, repeat: isPlaying ? Infinity : 0, ease: 'linear' }}
-              >
-                <div className="w-full h-full bg-gradient-to-br from-[oklch(0.72_0.22_300)] via-[oklch(0.80_0.15_320)] to-[oklch(0.75_0.18_180)] flex items-center justify-center">
-                  <ListMusic className="w-6 h-6 text-white/80" />
-                </div>
-              </motion.div>
-              <div className="min-w-0">
-                <h3 className="font-bold text-lg truncate">{currentTrack.title}</h3>
-                <p className="text-sm text-[oklch(0.65_0.02_280)] truncate">{currentTrack.artist}</p>
-              </div>
+          {/* Table header */}
+          <div className="grid grid-cols-[40px_1fr_1fr_60px] sm:grid-cols-[48px_1fr_1fr_80px] items-center px-4 sm:px-6 py-3 border-b border-[oklch(0.25_0.03_280)] text-xs text-[oklch(0.45_0.02_280)] font-medium uppercase tracking-wider">
+            <div className="text-center">
+              <Hash className="w-3 h-3 mx-auto" />
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setShuffle(!shuffle)}
-                className={`p-2 rounded-lg transition-all ${shuffle ? 'text-[oklch(0.72_0.22_300)] bg-[oklch(0.72_0.22_300/0.1)]' : 'text-[oklch(0.55_0.02_280)] hover:text-foreground'}`}
-                title="Shuffle"
-              >
-                <Shuffle className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setRepeat(!repeat)}
-                className={`p-2 rounded-lg transition-all ${repeat ? 'text-[oklch(0.75_0.18_180)] bg-[oklch(0.75_0.18_180/0.1)]' : 'text-[oklch(0.55_0.02_280)] hover:text-foreground'}`}
-                title="Repeat"
-              >
-                <Repeat className="w-4 h-4" />
-              </button>
+            <div>Title</div>
+            <div className="hidden sm:block">Album</div>
+            <div className="text-right">
+              <Clock className="w-3 h-3 ml-auto" />
             </div>
           </div>
 
-          {/* Progress bar */}
-          <div className="mb-4">
-            <input
-              type="range"
-              min="0"
-              max={duration || 0}
-              value={currentTime}
-              onChange={seek}
-              className="w-full h-1 bg-[oklch(0.25_0.03_280)] rounded-full appearance-none cursor-pointer audio-progress"
-              style={{
-                background: `linear-gradient(to right, oklch(0.72 0.22 300) ${progress}%, oklch(0.25 0.03 280) ${progress}%)`,
-              }}
-            />
-            <div className="flex justify-between mt-2 text-xs text-[oklch(0.55_0.02_280)]">
-              <span>{formatTime(currentTime)}</span>
-              <span>{formatTime(duration)}</span>
-            </div>
-          </div>
+          {/* Track rows */}
+          <div className="max-h-[520px] overflow-y-auto spotify-scrollbar">
+            {tracks.map((track, index) => {
+              const isActive = currentTrack.id === track.id;
+              const isHovered = hoveredTrack === track.id;
+              return (
+                <motion.button
+                  key={track.id}
+                  className={`w-full grid grid-cols-[40px_1fr_1fr_60px] sm:grid-cols-[48px_1fr_1fr_80px] items-center px-4 sm:px-6 py-2.5 text-left transition-all duration-150 group ${
+                    isActive
+                      ? 'bg-[oklch(0.72_0.22_300/0.08)]'
+                      : 'hover:bg-[oklch(0.20_0.03_280/0.5)]'
+                  }`}
+                  onClick={() => {
+                    if (isActive && isPlaying) {
+                      togglePlay();
+                    } else if (isActive) {
+                      togglePlay();
+                    } else {
+                      playTrack(track);
+                    }
+                  }}
+                  onMouseEnter={() => setHoveredTrack(track.id)}
+                  onMouseLeave={() => setHoveredTrack(null)}
+                  whileTap={{ scale: 0.995 }}
+                >
+                  {/* Number / Play indicator */}
+                  <div className="flex items-center justify-center w-8">
+                    {isActive && isPlaying ? (
+                      isHovered ? (
+                        <Pause className="w-3.5 h-3.5 text-[oklch(0.72_0.22_300)]" />
+                      ) : (
+                        <div className="flex items-end justify-center gap-[2px] h-4">
+                          {[0, 1, 2].map((bar) => (
+                            <motion.div
+                              key={bar}
+                              className="w-[2.5px] rounded-full bg-[oklch(0.72_0.22_300)]"
+                              animate={{ height: ['3px', '12px', '3px'] }}
+                              transition={{ duration: 0.5, repeat: Infinity, delay: bar * 0.12 }}
+                            />
+                          ))}
+                        </div>
+                      )
+                    ) : isHovered ? (
+                      <Play className="w-3.5 h-3.5 text-foreground" />
+                    ) : (
+                      <span className={`text-sm tabular-nums ${isActive ? 'text-[oklch(0.72_0.22_300)]' : 'text-[oklch(0.45_0.02_280)]'}`}>
+                        {index + 1}
+                      </span>
+                    )}
+                  </div>
 
-          {/* Controls */}
-          <div className="flex items-center justify-center gap-4 sm:gap-6 mb-6">
-            <button onClick={prevTrack} className="p-2 text-[oklch(0.65_0.02_280)] hover:text-foreground transition-colors">
-              <SkipBack className="w-5 h-5" />
-            </button>
-            <button
-              onClick={togglePlay}
-              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
-              style={{
-                background: 'linear-gradient(135deg, oklch(0.72 0.22 300), oklch(0.75 0.18 180))',
-                boxShadow: isPlaying
-                  ? '0 0 30px oklch(0.72 0.22 300 / 0.4), 0 0 60px oklch(0.72 0.22 300 / 0.2)'
-                  : '0 0 15px oklch(0.72 0.22 300 / 0.2)',
-              }}
-            >
-              {isPlaying ? (
-                <Pause className="w-6 h-6 text-white" />
-              ) : (
-                <Play className="w-6 h-6 text-white ml-1" />
-              )}
-            </button>
-            <button onClick={nextTrack} className="p-2 text-[oklch(0.65_0.02_280)] hover:text-foreground transition-colors">
-              <SkipForward className="w-5 h-5" />
-            </button>
-          </div>
+                  {/* Title + Artist */}
+                  <div className="flex items-center gap-3 min-w-0 pr-3">
+                    {/* Mini album art */}
+                    <div
+                      className="w-10 h-10 rounded flex-shrink-0 flex items-center justify-center"
+                      style={{ background: getTrackGradient(track.id) }}
+                    >
+                      <Music2 className="w-4 h-4 text-white/70" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className={`text-sm font-medium truncate ${isActive ? 'text-[oklch(0.72_0.22_300)]' : 'text-foreground'}`}>
+                        {track.title}
+                      </p>
+                      <p className="text-xs text-[oklch(0.50_0.02_280)] truncate">
+                        {track.artist}
+                      </p>
+                    </div>
+                  </div>
 
-          {/* Volume */}
-          <div className="flex items-center gap-3">
-            <button onClick={toggleMute} className="text-[oklch(0.55_0.02_280)] hover:text-foreground transition-colors">
-              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-            </button>
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={isMuted ? 0 : volume}
-              onChange={changeVolume}
-              className="flex-1 h-1 bg-[oklch(0.25_0.03_280)] rounded-full appearance-none cursor-pointer audio-progress"
-              style={{
-                background: `linear-gradient(to right, oklch(0.75 0.18 180) ${(isMuted ? 0 : volume) * 100}%, oklch(0.25 0.03 280) ${(isMuted ? 0 : volume) * 100}%)`,
-              }}
-            />
-          </div>
+                  {/* Album */}
+                  <div className="hidden sm:block">
+                    <p className="text-xs text-[oklch(0.45_0.02_280)] truncate hover:text-foreground transition-colors">
+                      {track.album}
+                    </p>
+                  </div>
 
-          {/* Toggle tracklist */}
-          <button
-            onClick={() => setShowTrackList(!showTrackList)}
-            className="w-full mt-6 flex items-center justify-center gap-2 text-sm text-[oklch(0.55_0.02_280)] hover:text-[oklch(0.72_0.22_300)] transition-colors"
-          >
-            <span>{showTrackList ? 'Hide' : 'Show'} Tracklist</span>
-            <motion.div animate={{ rotate: showTrackList ? 180 : 0 }}>
-              <ChevronDown className="w-4 h-4" />
-            </motion.div>
-          </button>
+                  {/* Duration */}
+                  <div className="text-right">
+                    <span className="text-xs tabular-nums text-[oklch(0.45_0.02_280)]">
+                      {trackDurations[track.id] ? formatTime(trackDurations[track.id]) : '—'}
+                    </span>
+                  </div>
+                </motion.button>
+              );
+            })}
+          </div>
         </motion.div>
 
-        {/* Track list */}
-        <AnimatePresence>
-          {showTrackList && (
-            <motion.div
-              className="glass rounded-2xl mt-4 overflow-hidden"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="divide-y divide-[oklch(0.25_0.03_280)]">
-                {tracks.map((track, index) => {
-                  const isActive = currentTrack.id === track.id;
-                  return (
-                    <motion.button
-                      key={track.id}
-                      className={`w-full flex items-center gap-4 px-6 py-4 text-left transition-all duration-200 ${
-                        isActive
-                          ? 'bg-[oklch(0.72_0.22_300/0.1)]'
-                          : 'hover:bg-[oklch(0.18_0.03_280)]'
-                      }`}
-                      onClick={() => playTrack(track)}
-                      onMouseEnter={() => setHoveredTrack(track.id)}
-                      onMouseLeave={() => setHoveredTrack(null)}
-                      whileTap={{ scale: 0.99 }}
-                    >
-                      {/* Track number / playing indicator */}
-                      <div className="w-8 text-center flex-shrink-0">
-                        {isActive && isPlaying ? (
-                          <div className="flex items-end justify-center gap-[2px] h-4">
-                            {[0, 1, 2].map((bar) => (
-                              <motion.div
-                                key={bar}
-                                className="w-[3px] rounded-full bg-[oklch(0.72_0.22_300)]"
-                                animate={{
-                                  height: ['4px', '12px', '4px'],
-                                }}
-                                transition={{
-                                  duration: 0.6,
-                                  repeat: Infinity,
-                                  delay: bar * 0.15,
-                                }}
-                              />
-                            ))}
-                          </div>
-                        ) : (
-                          <span className={`text-sm ${isActive ? 'text-[oklch(0.72_0.22_300)]' : 'text-[oklch(0.55_0.02_280)]'}`}>
-                            {hoveredTrack === track.id && !isActive ? (
-                              <Play className="w-3.5 h-3.5 mx-auto" />
-                            ) : (
-                              String(index + 1).padStart(2, '0')
-                            )}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Track info */}
-                      <div className="flex-1 min-w-0">
-                        <p className={`font-medium truncate ${isActive ? 'text-[oklch(0.72_0.22_300)]' : ''}`}>
-                          {track.title}
-                        </p>
-                        <p className="text-xs text-[oklch(0.55_0.02_280)] truncate">
-                          {track.artist}
-                        </p>
-                      </div>
-
-                      {/* Active indicator */}
-                      {isActive && (
-                        <div className="w-2 h-2 rounded-full bg-[oklch(0.72_0.22_300)] animate-pulse" />
-                      )}
-                    </motion.button>
-                  );
-                })}
+        {/* Sticky bottom player bar */}
+        <motion.div
+          className="sticky bottom-4 mt-6 glass rounded-2xl px-4 sm:px-6 py-4 glow-purple"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <div className="flex items-center gap-4">
+            {/* Now playing info */}
+            <div className="flex items-center gap-3 min-w-0 w-1/4 sm:w-1/3">
+              <motion.div
+                className="w-12 h-12 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden"
+                style={{ background: getTrackGradient(currentTrack.id) }}
+                animate={{ scale: isPlaying ? [1, 1.03, 1] : 1 }}
+                transition={{ duration: 2, repeat: isPlaying ? Infinity : 0 }}
+              >
+                <Music2 className="w-5 h-5 text-white/70" />
+              </motion.div>
+              <div className="min-w-0 hidden sm:block">
+                <p className="text-sm font-medium truncate text-foreground">{currentTrack.title}</p>
+                <p className="text-xs text-[oklch(0.50_0.02_280)] truncate">{currentTrack.artist}</p>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+
+            {/* Center controls + progress */}
+            <div className="flex-1 flex flex-col items-center gap-1.5 max-w-xl">
+              {/* Playback controls */}
+              <div className="flex items-center gap-3 sm:gap-5">
+                <button
+                  onClick={() => setShuffle(!shuffle)}
+                  className={`p-1 transition-all hidden sm:block ${shuffle ? 'text-[oklch(0.72_0.22_300)]' : 'text-[oklch(0.45_0.02_280)] hover:text-foreground'}`}
+                >
+                  <Shuffle className="w-3.5 h-3.5" />
+                </button>
+                <button onClick={prevTrack} className="p-1 text-[oklch(0.60_0.02_280)] hover:text-foreground transition-colors">
+                  <SkipBack className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={togglePlay}
+                  className="w-9 h-9 rounded-full flex items-center justify-center bg-foreground text-background hover:scale-105 active:scale-95 transition-transform"
+                >
+                  {isPlaying ? (
+                    <Pause className="w-4 h-4" />
+                  ) : (
+                    <Play className="w-4 h-4 ml-0.5" />
+                  )}
+                </button>
+                <button onClick={nextTrack} className="p-1 text-[oklch(0.60_0.02_280)] hover:text-foreground transition-colors">
+                  <SkipForward className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setRepeat(!repeat)}
+                  className={`p-1 transition-all hidden sm:block ${repeat ? 'text-[oklch(0.75_0.18_180)]' : 'text-[oklch(0.45_0.02_280)] hover:text-foreground'}`}
+                >
+                  <Repeat className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Progress bar */}
+              <div className="w-full flex items-center gap-2">
+                <span className="text-[10px] tabular-nums text-[oklch(0.45_0.02_280)] w-8 text-right">{formatTime(currentTime)}</span>
+                <div
+                  className="flex-1 h-1 rounded-full bg-[oklch(0.22_0.02_280)] cursor-pointer group/bar relative"
+                  onClick={seek}
+                  onMouseEnter={() => setSeekHover(true)}
+                  onMouseLeave={() => setSeekHover(false)}
+                >
+                  <div
+                    className="h-full rounded-full transition-colors"
+                    style={{
+                      width: `${progress}%`,
+                      background: seekHover
+                        ? 'oklch(0.72 0.22 300)'
+                        : 'oklch(0.90 0.01 280)',
+                    }}
+                  />
+                  {/* Seek dot */}
+                  <AnimatePresence>
+                    {seekHover && (
+                      <motion.div
+                        className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-foreground"
+                        style={{ left: `calc(${progress}% - 6px)` }}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                      />
+                    )}
+                  </AnimatePresence>
+                </div>
+                <span className="text-[10px] tabular-nums text-[oklch(0.45_0.02_280)] w-8">{formatTime(duration)}</span>
+              </div>
+            </div>
+
+            {/* Volume */}
+            <div className="hidden sm:flex items-center gap-2 w-1/4 justify-end">
+              <button onClick={toggleMute} className="text-[oklch(0.45_0.02_280)] hover:text-foreground transition-colors">
+                <VolumeIcon className="w-4 h-4" />
+              </button>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={isMuted ? 0 : volume}
+                onChange={changeVolume}
+                className="w-20 h-1 bg-[oklch(0.22_0.02_280)] rounded-full appearance-none cursor-pointer volume-slider"
+                style={{
+                  background: `linear-gradient(to right, oklch(0.90 0.01 280) ${(isMuted ? 0 : volume) * 100}%, oklch(0.22 0.02 280) ${(isMuted ? 0 : volume) * 100}%)`,
+                }}
+              />
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
