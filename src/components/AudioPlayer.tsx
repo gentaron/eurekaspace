@@ -6,6 +6,7 @@ import {
   Play, Pause, SkipBack, SkipForward, Volume2, VolumeX,
   Repeat, Shuffle, ListMusic, ChevronDown
 } from 'lucide-react';
+import { useMediaStore } from '@/lib/mediaStore';
 
 interface Track {
   id: number;
@@ -47,24 +48,31 @@ export default function AudioPlayer() {
   const [visualizerData, setVisualizerData] = useState<number[]>(Array(32).fill(0));
   const [hoveredTrack, setHoveredTrack] = useState<number | null>(null);
 
+  const { activeSource, setActiveSource } = useMediaStore();
+
   const playTrack = useCallback((track: Track) => {
     setCurrentTrack(track);
-    setIsPlaying(true);
+    setActiveSource('audio');
     setTimeout(() => {
       if (audioRef.current) {
-        audioRef.current.play();
+        audioRef.current.play().catch(() => {
+          /* play() rejected — onPlay won't fire, isPlaying stays false */
+        });
       }
     }, 100);
-  }, []);
+  }, [setActiveSource]);
 
   const togglePlay = () => {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
+        setActiveSource(null);
       } else {
-        audioRef.current.play();
+        setActiveSource('audio');
+        audioRef.current.play().catch(() => {
+          /* play() rejected */
+        });
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
@@ -114,12 +122,21 @@ export default function AudioPlayer() {
     if (repeat) {
       if (audioRef.current) {
         audioRef.current.currentTime = 0;
-        audioRef.current.play();
+        audioRef.current.play().catch(() => {
+          /* play() rejected */
+        });
       }
     } else {
       nextTrack();
     }
   };
+
+  // Auto-pause audio when video takes over
+  useEffect(() => {
+    if (activeSource === 'video' && audioRef.current && !audioRef.current.paused) {
+      audioRef.current.pause();
+    }
+  }, [activeSource]);
 
   const seek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const time = parseFloat(e.target.value);
@@ -139,11 +156,22 @@ export default function AudioPlayer() {
   };
 
   const toggleMute = () => {
-    setIsMuted(!isMuted);
+    const newMuted = !isMuted;
+    setIsMuted(newMuted);
     if (audioRef.current) {
-      audioRef.current.muted = !isMuted;
+      audioRef.current.muted = newMuted;
     }
   };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      setActiveSource(null);
+    };
+  }, [setActiveSource]);
 
   // Simulated visualizer
   useEffect(() => {
@@ -229,6 +257,8 @@ export default function AudioPlayer() {
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
             onEnded={handleEnded}
+            onPause={() => setIsPlaying(false)}
+            onPlay={() => setIsPlaying(true)}
             preload="metadata"
           />
 

@@ -1,23 +1,29 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Pause, Maximize, Volume2 } from 'lucide-react';
+import { useMediaStore } from '@/lib/mediaStore';
 
 export default function VideoSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showOverlay, setShowOverlay] = useState(true);
 
+  const { activeSource, setActiveSource } = useMediaStore();
+
   const togglePlay = () => {
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
+        setActiveSource(null);
       } else {
-        videoRef.current.play();
+        setActiveSource('video');
+        setShowOverlay(false);
+        videoRef.current.play().catch(() => {
+          setShowOverlay(true);
+        });
       }
-      setIsPlaying(!isPlaying);
-      setShowOverlay(false);
     }
   };
 
@@ -28,6 +34,24 @@ export default function VideoSection() {
       }
     }
   };
+
+  // Auto-pause video when audio takes over
+  useEffect(() => {
+    if (activeSource === 'audio' && videoRef.current && !videoRef.current.paused) {
+      videoRef.current.pause();
+      // onPause event will fire and set isPlaying=false via the video element
+    }
+  }, [activeSource]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.pause();
+      }
+      setActiveSource(null);
+    };
+  }, [setActiveSource]);
 
   return (
     <section className="relative py-20 px-6" id="video">
@@ -70,9 +94,9 @@ export default function VideoSection() {
               className="w-full h-full object-contain"
               src="/video/grok-video-d6391748-c6e5-4dc4-a1ea-b444f6ab7e14.mp4"
               onClick={togglePlay}
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              onEnded={() => { setIsPlaying(false); setShowOverlay(true); }}
+              onPlay={() => { setIsPlaying(true); setActiveSource('video'); }}
+              onPause={() => { setIsPlaying(false); setShowOverlay(true); setActiveSource(null); }}
+              onEnded={() => { setIsPlaying(false); setShowOverlay(true); setActiveSource(null); }}
               playsInline
               preload="metadata"
               poster="/images/from-PixAI-1981530503026545976-2.png"
