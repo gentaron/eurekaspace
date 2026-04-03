@@ -3,14 +3,15 @@
 import HeroSection from '@/components/HeroSection';
 import AudioPlayer from '@/components/AudioPlayer';
 import VideoSection from '@/components/VideoSection';
+import LinksSection from '@/components/LinksSection';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
-import { Music, Headphones, Sparkles, Zap, Radio, Waveform } from 'lucide-react';
+import { Music, Headphones, Sparkles, Zap, Radio, Link2 } from 'lucide-react';
 
 function FloatingNavbar() {
   return (
     <motion.nav
-      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-6 py-3 flex items-center gap-6"
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-6 py-3 flex items-center gap-4 sm:gap-6"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 1.5 }}
@@ -23,6 +24,11 @@ function FloatingNavbar() {
       <a href="#video" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.75_0.18_180)] transition-colors flex items-center gap-1.5">
         <Headphones className="w-3.5 h-3.5" />
         <span className="hidden sm:inline">Video</span>
+      </a>
+      <div className="w-px h-4 bg-[oklch(0.25_0.03_280)]" />
+      <a href="#links" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.80_0.15_320)] transition-colors flex items-center gap-1.5">
+        <Link2 className="w-3.5 h-3.5" />
+        <span className="hidden sm:inline">Links</span>
       </a>
     </motion.nav>
   );
@@ -67,6 +73,7 @@ export default function Home() {
       <AudioPlayer />
       <MarqueeBanner />
       <VideoSection />
+      <LinksSection />
       <Footer />
     </div>
   );

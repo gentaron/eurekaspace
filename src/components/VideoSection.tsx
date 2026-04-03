@@ -56,18 +56,18 @@ export default function VideoSection() {
           </h2>
         </motion.div>
 
-        {/* Video container */}
+        {/* Video container - native aspect ratio (416x752) */}
         <motion.div
-          className="relative rounded-2xl overflow-hidden glass glow-cyan group"
+          className="relative rounded-2xl overflow-hidden glass glow-cyan group max-w-sm mx-auto"
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="relative aspect-video bg-black">
+          <div className="relative bg-black" style={{ aspectRatio: '416/752' }}>
             <video
               ref={videoRef}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               src="/video/grok-video-d6391748-c6e5-4dc4-a1ea-b444f6ab7e14.mp4"
               onClick={togglePlay}
               onPlay={() => setIsPlaying(true)}

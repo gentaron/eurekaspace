@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
+export const artistImage = '/images/from-PixAI-1981530503026545976-2.png';
+
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -75,15 +77,15 @@ export default function HeroSection() {
           <div className="absolute -inset-4 rounded-2xl opacity-50 blur-xl animate-pulse-glow"
             style={{ background: 'linear-gradient(135deg, oklch(0.72 0.22 300), oklch(0.75 0.18 180))' }}
           />
-          <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden border border-[oklch(0.30_0.04_300/0.3)]">
+          <div className="relative w-52 sm:w-60 lg:w-72 rounded-2xl overflow-hidden border border-[oklch(0.30_0.04_300/0.3)]" style={{ aspectRatio: '768/1280' }}>
             <Image
               src="/images/from-PixAI-1981530503026545976-2.png"
               alt="Mina Eureka"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-110"
+              width={768}
+              height={1280}
+              className="object-contain transition-transform duration-700 group-hover:scale-105"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.07_0.02_280/0.6)] via-transparent to-transparent" />
           </div>
           {/* Floating badge */}
           <motion.div
