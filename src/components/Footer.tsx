@@ -40,11 +40,11 @@ export default function Footer() {
           <div className="flex items-center gap-6 text-sm text-[oklch(0.55_0.02_280)]">
             <div className="flex items-center gap-1.5">
               <Music className="w-3.5 h-3.5 text-[oklch(0.72_0.22_300)]" />
-              <span>25 Tracks</span>
+              <span>Genesis Vault 2000+</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Video className="w-3.5 h-3.5 text-[oklch(0.75_0.18_180)]" />
-              <span>5 Videos</span>
+              <span>Liminal Forge · E528</span>
             </div>
           </div>
 

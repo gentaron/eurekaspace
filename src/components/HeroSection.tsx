@@ -128,9 +128,9 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            Exploring the boundaries of sound and imagination.
-            From quantum wavefunctions to gravitational waves —
-            every track is a sonic experiment in creativity.
+            E16連星系・Symphony of Stars発。E528現在、AURALIS第二世代の音楽プロデューサーとして
+            リミナル・フォージを主宰し、時相放送で地球AD2026のインターネット上に出現する
+            <span className="text-[oklch(0.80_0.15_320)]"> celestial × avant-garde</span> アーティスト。
           </motion.p>
 
           <motion.div
@@ -139,7 +139,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
           >
-            {['Electronic', 'Experimental', 'Vocaloid', 'Synthwave'].map((tag) => (
+            {['celestial', 'avant-garde', 'AURALIS', 'Liminal Forge', 'E528'].map((tag) => (
               <span
                 key={tag}
                 className="glass rounded-full px-4 py-1.5 text-sm text-[oklch(0.80_0.15_320)] hover:text-[oklch(0.72_0.22_300)] transition-colors cursor-default"
@@ -157,9 +157,9 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 1.1 }}
           >
             {[
-              { value: '25', label: 'Tracks' },
-              { value: '5', label: 'Videos' },
-              { value: '∞', label: 'Vibes' },
+              { value: '2000+', label: 'Genesis Vault' },
+              { value: '5', label: 'AURALIS Members' },
+              { value: 'E528', label: 'Current Year' },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-[oklch(0.72_0.22_300)] to-[oklch(0.75_0.18_180)] bg-clip-text text-transparent">
