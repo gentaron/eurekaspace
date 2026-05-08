@@ -1,112 +1,142 @@
-'use client';
+"use client"
 
-import HeroSection from '@/components/HeroSection';
-import AudioPlayer from '@/components/AudioPlayer';
-import VideoSection from '@/components/VideoSection';
-import CharactersSection from '@/components/CharactersSection';
-import WorldSection from '@/components/WorldSection';
-import LinksSection from '@/components/LinksSection';
-import Footer from '@/components/Footer';
-import { motion } from 'framer-motion';
-import { Music, Headphones, Sparkles, Zap, Radio, Link2, Film, Flame, Users, Globe } from 'lucide-react';
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { Rocket, Scroll, BookOpen, ChevronRight, Orbit } from "lucide-react"
+import { useLang } from "@/lib/use-lang"
+import { type Lang, tl } from "@/lib/lang"
 
-function FloatingNavbar() {
-  return (
-    <motion.nav
-      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-6 py-3 flex items-center gap-4 sm:gap-6"
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 1.5 }}
-    >
-      <a href="#tracks" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.72_0.22_300)] transition-colors flex items-center gap-1.5">
-        <Music className="w-3.5 h-3.5" />
-        <span className="hidden sm:inline">Tracks</span>
-      </a>
-      <div className="w-px h-4 bg-[oklch(0.25_0.03_280)]" />
-      <a href="#video" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.70_0.25_350)] transition-colors flex items-center gap-1.5">
-        <Flame className="w-3.5 h-3.5" />
-        <span className="hidden sm:inline">Sexy Block</span>
-      </a>
-      <div className="w-px h-4 bg-[oklch(0.25_0.03_280)]" />
-      <a href="#characters" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.72_0.22_300)] transition-colors flex items-center gap-1.5">
-        <Users className="w-3.5 h-3.5" />
-        <span className="hidden sm:inline">Characters</span>
-      </a>
-      <div className="w-px h-4 bg-[oklch(0.25_0.03_280)]" />
-      <a href="#world" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.75_0.18_180)] transition-colors flex items-center gap-1.5">
-        <Globe className="w-3.5 h-3.5" />
-        <span className="hidden sm:inline">World</span>
-      </a>
-      <div className="w-px h-4 bg-[oklch(0.25_0.03_280)]" />
-      <a href="#links" className="text-sm text-[oklch(0.65_0.02_280)] hover:text-[oklch(0.80_0.15_320)] transition-colors flex items-center gap-1.5">
-        <Link2 className="w-3.5 h-3.5" />
-        <span className="hidden sm:inline">Links</span>
-      </a>
-    </motion.nav>
-  );
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.12, duration: 0.5, ease: "easeOut" as const },
+  }),
 }
 
-function MarqueeBanner() {
-  const items = [
-    { icon: Sparkles, text: 'Mina Eureka' },
-    { icon: Zap, text: 'Experimental Sound' },
-    { icon: Radio, text: 'Sonic Universe' },
-    { icon: Music, text: 'Creative Freedom' },
-    { icon: Sparkles, text: 'Mina Eureka' },
-    { icon: Zap, text: 'Experimental Sound' },
-    { icon: Radio, text: 'Sonic Universe' },
-    { icon: Music, text: 'Creative Freedom' },
-  ];
+export default function HomePage() {
+  const { lang } = useLang()
 
   return (
-    <div className="relative overflow-hidden py-6 border-y border-[oklch(0.20_0.03_280)]">
-      <motion.div
-        className="flex gap-8 whitespace-nowrap"
-        animate={{ x: [0, -1200] }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-      >
-        {[...items, ...items].map((item, i) => (
-          <div key={i} className="flex items-center gap-2 text-sm text-[oklch(0.40_0.02_280)]">
-            <item.icon className="w-4 h-4 text-[oklch(0.72_0.22_300/0.3)]" />
-            <span>{item.text}</span>
-          </div>
-        ))}
-      </motion.div>
-    </div>
-  );
-}
+    <div className="min-h-screen bg-edu-bg">
+      {/* Hero */}
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
+        {/* Radial glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#14b8a6]/8 rounded-full blur-[120px] pointer-events-none" />
 
-function SectionDivider({ label, icon: Icon }: { label: string; icon: React.ComponentType<{ className?: string }> }) {
-  return (
-    <div className="relative py-10">
-      <div className="absolute inset-0 flex items-center px-6">
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-[oklch(0.25_0.03_280)] to-transparent" />
-      </div>
-      <div className="relative flex justify-center">
-        <span className="glass rounded-full px-5 py-2 text-xs font-mono tracking-[0.2em] uppercase text-[oklch(0.50_0.02_280)] flex items-center gap-2">
-          <Icon className="w-3.5 h-3.5 text-[oklch(0.72_0.22_300)]" />
-          {label}
-        </span>
-      </div>
-    </div>
-  );
-}
+        <div className="relative max-w-3xl mx-auto text-center">
+          <motion.div
+            custom={0}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="mb-6"
+          >
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#14b8a6]/10 border border-[#14b8a6]/20 mb-6">
+              <Rocket className="w-8 h-8 text-[#14b8a6]" />
+            </div>
+          </motion.div>
 
-export default function Home() {
-  return (
-    <div className="min-h-screen noise-bg relative">
-      <FloatingNavbar />
-      <HeroSection />
-      <MarqueeBanner />
-      <AudioPlayer />
-      <SectionDivider label="セクシー・ブロック" icon={Flame} />
-      <VideoSection />
-      <SectionDivider label="キャラクター" icon={Users} />
-      <CharactersSection />
-      <SectionDivider label="世界観" icon={Globe} />
-      <WorldSection />
-      <LinksSection />
-      <Footer />
+          <motion.h1
+            custom={1}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="text-4xl sm:text-5xl font-bold tracking-wider text-edu-text mb-4"
+          >
+            EUREKA SPACE
+          </motion.h1>
+
+          <motion.p
+            custom={2}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="text-sm sm:text-base text-edu-muted max-w-lg mx-auto leading-relaxed mb-8"
+          >
+            {lang === "en"
+              ? "Chart the unknown reaches of the E16 binary star system — From humanity's first departure to the frontiers of deep space exploration."
+              : "E16連星系の未知の領域を切り拓く — 人類最初の地球離脱から深宇宙探査の最前線まで。"}
+          </motion.p>
+
+          <motion.div
+            custom={3}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="flex items-center justify-center gap-2 text-xs text-[#14b8a6]/70"
+          >
+            <Orbit className="w-3 h-3" />
+            <span>{lang === "en" ? "Space Exploration Theme" : "宇宙探査テーマ"}</span>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Feature Cards */}
+      <section className="max-w-3xl mx-auto px-4 pb-24">
+        <div className="grid sm:grid-cols-2 gap-4">
+          <motion.div
+            custom={4}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+          >
+            <Link
+              href="/timeline"
+              className="group block edu-card rounded-xl p-6 hover:border-[#14b8a6]/30 transition-all duration-300"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-9 h-9 rounded-lg bg-[#14b8a6]/10 flex items-center justify-center">
+                  <Scroll className="w-4.5 h-4.5 text-[#14b8a6]" />
+                </div>
+                <h2 className="text-base font-bold text-edu-text">
+                  {tl("統合年表", "Timeline", lang)}
+                </h2>
+              </div>
+              <p className="text-xs text-edu-muted leading-relaxed mb-4">
+                {lang === "en"
+                  ? "From AD 3500 to the present E528 — trace the grand sweep of E16 civilization across eras and locations."
+                  : "AD 3500からE528現代まで — 各時代・各場所を横断するE16文明の壮大な年表。"}
+              </p>
+              <span className="inline-flex items-center gap-1 text-xs text-[#14b8a6] group-hover:gap-2 transition-all">
+                {tl("年表を見る", "View Timeline", lang)}
+                <ChevronRight className="w-3 h-3" />
+              </span>
+            </Link>
+          </motion.div>
+
+          <motion.div
+            custom={5}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+          >
+            <Link
+              href="/wiki"
+              className="group block edu-card rounded-xl p-6 hover:border-[#14b8a6]/30 transition-all duration-300"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-9 h-9 rounded-lg bg-[#14b8a6]/10 flex items-center justify-center">
+                  <BookOpen className="w-4.5 h-4.5 text-[#14b8a6]" />
+                </div>
+                <h2 className="text-base font-bold text-edu-text">
+                  {tl("Wiki 百科事典", "Wiki Encyclopedia", lang)}
+                </h2>
+              </div>
+              <p className="text-xs text-edu-muted leading-relaxed mb-4">
+                {lang === "en"
+                  ? "Characters, organizations, geography, technology, and more — a comprehensive encyclopedia of the E16 universe."
+                  : "キャラクター・組織・地理・技術など — E16世界観の包括的な百科事典。"}
+              </p>
+              <span className="inline-flex items-center gap-1 text-xs text-[#14b8a6] group-hover:gap-2 transition-all">
+                {tl("Wikiを見る", "View Wiki", lang)}
+                <ChevronRight className="w-3 h-3" />
+              </span>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
     </div>
-  );
+  )
 }

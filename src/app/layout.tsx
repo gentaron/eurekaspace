@@ -1,50 +1,25 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
-import PrivyProviderWrapper from "@/components/PrivyProviderWrapper";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import type { Metadata } from "next"
+import "./globals.css"
+import { Navigation } from "./navigation"
 
 export const metadata: Metadata = {
-  title: "Mina Eureka — Artist Page",
-  description: "Welcome to the official artist page of Mina Eureka. Listen to tracks, watch videos, and explore the sonic universe.",
-  keywords: ["Mina Eureka", "music", "artist", "electronic", "experimental"],
-  authors: [{ name: "Mina Eureka" }],
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
-  openGraph: {
-    title: "Mina Eureka — Artist Page",
-    description: "Welcome to the official artist page of Mina Eureka.",
-    type: "website",
-  },
-};
+  title: "Eureka Space",
+  description:
+    "Eureka Space — E16連星系の人類史と宇宙探査の百科プロジェクト",
+  icons: { icon: "/favicon.ico" },
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-      >
-        <PrivyProviderWrapper>
-          {children}
-          <Toaster />
-        </PrivyProviderWrapper>
+    <html lang="ja" suppressHydrationWarning className="dark">
+      <body className="antialiased bg-background text-foreground">
+        <Navigation />
+        {children}
       </body>
     </html>
-  );
+  )
 }
