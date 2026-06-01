@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import { Navigation } from "./navigation"
+import { MarketTicker } from "@/platform/market-ticker"
 
 export const metadata: Metadata = {
   title: "Eureka Space",
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning className="dark">
       <body className="antialiased bg-background text-foreground">
+        <MarketTicker />
         <Navigation />
         {children}
       </body>
