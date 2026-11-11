@@ -1,0 +1,55 @@
+{
+  "$schema": "https://raw.githubusercontent.com/gentaron/infocollect/HEAD/ecosystem/schema.json",
+  "schema": 1,
+  "name": "eurekaspace",
+  "group": "edu",
+  "groupLabel": "EDU 宇宙",
+  "status": "maintained",
+  "role": "EDU ユニバース百科事典",
+  "stack": "Next.js · Bun",
+  "produces": [
+    "site"
+  ],
+  "consumes": [
+    "lore",
+    "art"
+  ],
+  "upstream": [
+    {
+      "repo": "edutext",
+      "flows": [
+        "lore"
+      ],
+      "url": "https://github.com/gentaron/edutext"
+    },
+    {
+      "repo": "image",
+      "flows": [
+        "art"
+      ],
+      "url": "https://github.com/gentaron/image"
+    }
+  ],
+  "downstream": [],
+  "siblings": [
+    "edutext",
+    "image",
+    "edu",
+    "irisworlds",
+    "laylaland",
+    "edunft",
+    "gamemina"
+  ],
+  "predecessors": [
+    "yelanwiki"
+  ],
+  "hub": {
+    "repo": "https://github.com/gentaron/infocollect",
+    "map": "https://github.com/gentaron/infocollect/blob/HEAD/ecosystem/README.md",
+    "kb": "https://raw.githubusercontent.com/gentaron/infocollect/HEAD/docs/kb",
+    "mcp": [
+      "infocollect-kb",
+      "forge"
+    ]
+  }
+}
