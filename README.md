@@ -105,3 +105,17 @@ Eureka Space is the encyclopedia site for the **Eternal Dominion Universe (EDU)*
 ## License
 
 [MIT](LICENSE)
+
+<!-- ecosystem:begin (自動生成: gentaron/infocollect の ecosystem/registry.json から。手で直さない) -->
+
+## つながり
+
+gentaron のリポジトリ群のうち **EDU 宇宙** の一つ。EDU ユニバース百科事典。
+
+- **受け取る**: [edutext](https://github.com/gentaron/edutext)（EDU の原典）、[image](https://github.com/gentaron/image)（キャラクターアート）
+- **同じ島**: [edu](https://github.com/gentaron/edu)、[irisworlds](https://github.com/gentaron/irisworlds)、[laylaland](https://github.com/gentaron/laylaland)、[edunft](https://github.com/gentaron/edunft)、[gamemina](https://github.com/gentaron/gamemina)
+- **前身**: [yelanwiki](https://github.com/gentaron/yelanwiki)
+
+全体の地図 → [ecosystem](https://github.com/gentaron/infocollect/blob/HEAD/ecosystem/README.md)
+
+<!-- ecosystem:end -->
